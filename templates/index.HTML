@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI News Dashboard</title>
+    <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { margin-bottom: 20px; }
+    input, button { padding: 8px; font-size: 14px; }
+    .news-card {
+        border: 1px solid #ddd;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background: #fafafa;
+    }
+    .title { font-weight: bold; font-size: 16px; margin-bottom: 5px; }
+    .sentiment { font-style: italic; color: gray; margin-top: 5px; }
+</style>
+
+</head>
+<body>
+    <h1>AI-Powered News Dashboard</h1>
+    <form method="post">
+        <input type="text" name="topic" placeholder="Enter topic" value="{{topic}}">
+        <button type="submit">Search</button>
+        {% if topic %}
+        <a href="/download_pdf/{{topic}}"><button type="button">Download PDF</button></a>
+        {% endif %}
+    </form>
+    <hr>
+
+    {% if news is not none %}
+        {% if news|length > 0 %}
+        <div style="display: flex; gap: 30px;">
+            <!-- Left side: News cards -->
+            <div style="flex: 1;">
+                {% for n in news %}
+                <div class="news-card">
+                    <div class="title"><a href="{{n.url}}" target="_blank">{{n.title}}</a></div>
+                    <div class="summary">{{ n.summary }}</div>
+                    <div class="sentiment">Sentiment: {{ n.sentiment }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Right side: Chart -->
+            <div style="flex: 0.7;">
+                {% if chart_div %}
+                    {{ chart_div | safe }}
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            <p>No news found for the topic "{{topic}}".</p>
+        {% endif %}
+    {% endif %}
+</body>
+
+</html>
+
+
+
+
