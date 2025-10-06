@@ -67,3 +67,5 @@ The requirements.txt should include gunicorn for production.
 Example Render start command:
 
 gunicorn app:app
+
+live link: https://ai-news-dashboard.onrender.com/
